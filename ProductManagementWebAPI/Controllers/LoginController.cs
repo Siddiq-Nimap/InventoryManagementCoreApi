@@ -17,7 +17,7 @@ namespace ProductManagementWebAPI.Controllers
             login = log;
         }
 
-        [HttpGet("GetToken")]
+        [HttpGet("Token")]
         public  IActionResult GetToken([FromBody]User user)
         {
            var data =  login.GenerateToken(user);
@@ -32,7 +32,7 @@ namespace ProductManagementWebAPI.Controllers
             return Ok(data);
         }
 
-        [HttpGet("GetUserId/{username}")]
+        [HttpGet("UserId/{username}")]
         public async Task<IActionResult> GetIdByUsername([FromRoute]string username)
         {
            var data = await login.GetIdByUsername(username);
@@ -40,7 +40,7 @@ namespace ProductManagementWebAPI.Controllers
             return Ok(data);
         }
 
-        [HttpGet("GetCredential")]
+        [HttpGet("Credential")]
         public async Task<IActionResult> GetCredentials([FromBody]LoginDto user)
         {
             var data = await login.LoginEntAsync(user);

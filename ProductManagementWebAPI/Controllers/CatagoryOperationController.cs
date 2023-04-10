@@ -22,8 +22,6 @@ namespace ProductManagementApi.Controllers
 
             if (check) { return Ok(); }
             return BadRequest();
-            
-
         }
 
         [HttpPut("DeActivate/{id}")]
@@ -42,7 +40,7 @@ namespace ProductManagementApi.Controllers
             return Ok(data);
         }
 
-        [HttpGet("AllReport")]
+        [HttpGet("Report")]
         public async Task<IActionResult> GetAllReport()
         {
            var data = await CataOp.ReportAllAsync();
@@ -50,7 +48,7 @@ namespace ProductManagementApi.Controllers
         }
 
 
-        [HttpPost("ProductToCat/{Productid}/{CatagoryId}")]
+        [HttpPost("AddProductToCatagory/{Productid}/{CatagoryId}")]
         public async Task<IActionResult> InsertProductToCatagory([FromRoute]int Productid ,[FromRoute] int CatagoryId)
         {
           bool check = await CataOp.InsertProductInCatagoryAsync(Productid,CatagoryId);

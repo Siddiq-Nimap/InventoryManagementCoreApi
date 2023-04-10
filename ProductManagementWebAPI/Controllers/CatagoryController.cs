@@ -17,42 +17,42 @@ namespace WebApplication3.Controllers
     {
         readonly IGenericRepository<Catagories> catagories;
         readonly IMapper mapper;
-        public CatagoryController(IGenericRepository<Catagories> catagory , IMapper map)
+        public CatagoryController(IGenericRepository<Catagories> catagory, IMapper map)
         {
             catagories = catagory;
             mapper = map;
         }
 
 
-        [HttpGet("AllList")]
-        
+        [HttpGet("Catagories")]
+
         public async Task<ActionResult<Catagories>> GetCatagory()
         {
-            
-          var data = await catagories.GetModel();
 
-           var mapdata =  mapper.Map<IEnumerable<Catagories>,IEnumerable<CatagoryDto>>(data);
+            var data = await catagories.GetModel();
+
+            var mapdata = mapper.Map<IEnumerable<Catagories>, IEnumerable<CatagoryDto>>(data);
             return Ok(mapdata);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCatagoryById([FromRoute]int id)
+        [HttpGet("Catagory/{id}")]
+        public async Task<IActionResult> GetCatagoryById([FromRoute] int id)
         {
-           var data = await catagories.GetModelById(id);
+            var data = await catagories.GetModelById(id);
 
             if (data == null)
             {
                 return BadRequest();
             }
 
-            var mapdata = mapper.Map<Catagories,CatagoryDto>(data);
+            var mapdata = mapper.Map<Catagories, CatagoryDto>(data);
             return Ok(mapdata);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateCatagory([FromBody]CatagoryDto cata)
+        [HttpPost("Catagory")]
+        public async Task<IActionResult> CreateCatagory([FromBody] CatagoryDto cata)
         {
-            
+
             var Mapcata = mapper.Map<CatagoryDto, Catagories>(cata);
 
             await catagories.InsertModel(Mapcata);
@@ -65,15 +65,15 @@ namespace WebApplication3.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCatagory([FromBody]CatagoryDto cata)
+        [HttpPut("Catagory")]
+        public async Task<IActionResult> UpdateCatagory([FromBody] CatagoryDto cata)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var Mapcata = mapper.Map<CatagoryDto, Catagories>(cata);
 
-             catagories.UpdateModel(Mapcata);
+            catagories.UpdateModel(Mapcata);
             var check = await catagories.Save();
 
             if (check)
@@ -83,15 +83,13 @@ namespace WebApplication3.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("Catagory/{id}")]
         public async Task<IActionResult> UpdateCatagoryPatch([FromBody] JsonPatchDocument cata, [FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //var Mapcata = mapper.Map<CatagoryDto, Catagories>(cata);
-
-           await catagories.UpdateModelPatch(id,cata);
+            await catagories.UpdateModelPatch(id, cata);
             var check = await catagories.Save();
 
             if (check)
@@ -101,23 +99,22 @@ namespace WebApplication3.Controllers
             return BadRequest(ModelState);
         }
 
-        public async Task<IActionResult> DeleteCatagory([FromRoute]int id)
+        [HttpDelete("Catagory/{id}")]
+        public async Task<IActionResult> DeleteCatagory([FromRoute] int id)
         {
-           var data = await catagories.DeleteModel(id);
+            var data = await catagories.DeleteModel(id);
 
             if (data == false)
             {
                 return BadRequest();
             }
-
             var check = await catagories.Save();
 
-            if(check) { return Ok(); }
+            if (check) { return Ok(); }
             else return BadRequest();
-
         }
 
-        
+
 
 
 

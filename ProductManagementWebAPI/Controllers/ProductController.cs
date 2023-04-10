@@ -26,7 +26,7 @@ namespace ProductManagementApi.Controllers
         }
 
 
-        [HttpGet("AllList")]
+        [HttpGet("Products")]
 
         public async Task<ActionResult<Products>> GetProducts()
         {
@@ -37,7 +37,7 @@ namespace ProductManagementApi.Controllers
             return Ok(mapdata);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Product/{id}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
             var data = await product.GetModelById(id);
@@ -51,7 +51,7 @@ namespace ProductManagementApi.Controllers
             return Ok(mapdata);
         }
 
-        [HttpPost]
+        [HttpPost("Product")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto cata)
         {
 
@@ -67,7 +67,7 @@ namespace ProductManagementApi.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut]
+        [HttpPut("Product")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductDto cata)
         {
             if (!ModelState.IsValid)
@@ -85,7 +85,7 @@ namespace ProductManagementApi.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("Product/{id}")]
         public async Task<IActionResult> UpdateProductPatch([FromBody] JsonPatchDocument cata, [FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace ProductManagementApi.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Product/{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute]int id)
         {
             var data = await product.DeleteModel(id);
